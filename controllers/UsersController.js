@@ -3,12 +3,9 @@ import DBClient from '../utils/db';
 import RedisClient from '../utils/redis';
 
 const { ObjectId } = require('mongodb');
-const Bull = require('bull');
 
 class UsersController {
   static async postNew(request, response) {
-    const userQueue = new Bull('userQueue');
-
     const userEmail = request.body.email;
     if (!userEmail) return response.status(400).send({ error: 'Missing email' });
 
@@ -20,10 +17,6 @@ class UsersController {
 
     const shaUserPassword = sha1(userPassword);
     const result = await DBClient.db.collection('users').insertOne({ email: userEmail, password: shaUserPassword });
-
-    userQueue.add({
-      userId: result.insertedId,
-    });
 
     return response.status(201).send({ id: result.insertedId, email: userEmail });
   }

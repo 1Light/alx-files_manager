@@ -1,7 +1,7 @@
 import router from './routes/index';
 
 const express = require('express');
-
+// create the Express server
 const app = express();
 const port = process.env.PORT || 5000;
 

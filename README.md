@@ -1,1 +1,1 @@
-0x04. Files manager
+﻿0x04. Files manager
